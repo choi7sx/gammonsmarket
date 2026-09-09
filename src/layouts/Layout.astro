@@ -1,86 +1,110 @@
 ---
-import path from "node:path";
 import "../styles/main.css";
+import "../styles/market.css";
 import site from "../../data/site.json";
+import business from "../../data/business.json";
+import navigation from "../../data/navigation.json";
 import Header from "../components/navigation/header.astro";
 import Footer from "../components/navigation/footer.astro";
-import { SEO } from "astro-seo";
+import Visit from "../components/market/Visit.astro";
 
 export interface SEOProps {
-  page_description: string | null;
-  featured_image: string | null;
-  featured_image_alt: string | null;
-  canonical_url: string | null;
-  no_index: boolean | null;
-  open_graph_type: string | null;
-  author_twitter_handle: string | null;
+  page_description?: string | null;
+  featured_image?: string | null;
+  featured_image_alt?: string | null;
+  canonical_url?: string | null;
+  no_index?: boolean | null;
+  open_graph_type?: string | null;
+  author_twitter_handle?: string | null;
 }
-
 export interface Props {
   title: string;
   seo?: SEOProps;
+  showVisit?: boolean;
 }
-
-const { seo, title } = Astro.props;
-const baseUrl = Astro.site?.toString() ?? "";
-
-let pageTitle = "";
-if (!title) {
-  pageTitle = site.site_title;
-} else if (Astro.url.pathname === "/") {
-  pageTitle = title;
-} else {
-  pageTitle = `${title} | ${site.site_title}`;
-}
-
-const description = seo?.page_description ?? site.description;
-const image = seo?.featured_image ?? site.image;
-const imagePath = path.join(baseUrl, image);
-const imageAlt = seo?.featured_image_alt ?? site.image_alt;
-const canonicalURL = new URL(seo?.canonical_url ?? Astro.url.pathname, baseUrl);
+const { title, seo, showVisit = true } = Astro.props;
+const base = Astro.site || new URL("https://www.gammonsmarket.com");
+const pageTitle =
+  Astro.url.pathname === "/" ? title : `${title} | ${site.site_title}`;
+const description = seo?.page_description || site.description;
+const canonicalURL = new URL(seo?.canonical_url || Astro.url.pathname, base);
+const imageURL = new URL(seo?.featured_image || site.image, base);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-
-    <SEO
-      noindex={seo?.no_index || false}
-      title={pageTitle}
-      description={description}
-      canonical={canonicalURL.toString()}
-      openGraph={{
-        basic: {
-          title: pageTitle,
-          url: baseUrl?.toString(),
-          type: seo?.open_graph_type || "website",
-          image: imagePath,
-        },
-        optional: { description },
-        image: { url: imagePath, alt: imageAlt },
-      }}
-      twitter={{
-        creator: `${seo?.author_twitter_handle || site.twitter_site}`,
-        site: `${site.twitter_site}`,
-        card: "summary_large_image",
-      }}
+    <link
+      rel="preload"
+      href="/fonts/dm-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/fraunces-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    {seo?.no_index && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:type" content={seo?.open_graph_type || "website"} />
+    <meta property="og:image" content={imageURL} />
+    <meta
+      property="og:image:alt"
+      content={seo?.featured_image_alt || site.image_alt}
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageURL} />
   </head>
-  <body class="flex flex-col min-h-screen">
-    <Header />
-    <main class="flex-1">
+  <body>
+    <editable-component
+      data-component="MarketHeader"
+      data-prop-header="@file[data/navigation.json].header"
+      data-prop-business="@file[data/business.json]"
+    >
+      <Header
+        header={navigation.header}
+        business={business}
+        pathname={Astro.url.pathname}
+      />
+    </editable-component>
+    <main id="main" data-pagefind-body>
       <slot />
+      {showVisit && (
+        <editable-component
+          data-component="MarketVisit"
+          data-prop="@file[data/business.json]"
+        >
+          <Visit {...business} />
+        </editable-component>
+      )}
     </main>
-    <Footer />
+    <editable-component
+      data-component="MarketFooter"
+      data-prop-footer="@file[data/navigation.json].footer"
+      data-prop-business="@file[data/business.json]"
+    >
+      <Footer footer={navigation.footer} business={business} />
+    </editable-component>
     <script>
+      import "../scripts/market-navigation";
       if (window.inEditorMode) {
-        import("../scripts/register-components.ts").catch((error) => {
-          console.warn("Failed to load CloudCannon component registration:", error);
-        });
+        import("../scripts/register-components").catch((error) =>
+          console.warn("Unable to load visual editing components:", error),
+        );
       }
     </script>
   </body>

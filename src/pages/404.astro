@@ -2,12 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="404 - Not Found">
-  <section class="flex flex-col items-center justify-center min-h-[60vh] px-8">
-    <img src="/images/404.png" alt="Error illustration" class="max-w-sm mb-8" />
-    <h1 class="text-3xl md:text-4xl font-bold mb-4">Page not found!</h1>
-    <a href="/" class="text-blue-600 hover:text-blue-800 font-medium text-lg">
-      &larr; Back home
-    </a>
+<Layout title="Page not found" showVisit={false} seo={{ no_index: true }}>
+  <section class="not-found wrap">
+    <p class="eyebrow">LOOKS LIKE A LITTLE WRONG TURN</p>
+    <h1>Let’s get you<br /><em>back to the market.</em></h1>
+    <p>We couldn’t find that page, but there’s plenty of good stuff waiting for you.</p>
+    <a href="/" class="button button-green">Back to the market →</a>
   </section>
 </Layout>

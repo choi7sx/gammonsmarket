@@ -1,0 +1,33 @@
+---
+import Icon from "./Icon.astro";
+import { actionLink, type MarketButton } from "../../lib/market";
+interface Props {
+  button: MarketButton;
+  prop?: string;
+  variant?: string;
+  icon?: string;
+  class?: string;
+}
+const {
+  button,
+  prop = "button",
+  variant = "green",
+  icon = "arrow-up-right",
+  class: className = "",
+} = Astro.props;
+---
+
+<a
+  href={actionLink(button)}
+  class={
+    variant === "text"
+      ? `text-link ${className}`
+      : `button button-${variant} ${className}`
+  }
+  data-conversion={button.action}
+>
+  <span data-editable="text" data-prop={`${prop}.text`}>
+    {button.text}
+  </span>
+  <Icon name={icon} size={18} />
+</a>

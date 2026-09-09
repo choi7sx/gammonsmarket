@@ -1,0 +1,83 @@
+---
+import Icon from "./Icon.astro";
+const b = Astro.props;
+---
+
+<section class="visit-section" id="visit">
+  <div class="wrap visit-layout">
+    <div class="visit-intro">
+      <p class="eyebrow" data-editable="text" data-prop="visit.eyebrow">
+        {b.visit.eyebrow}
+      </p>
+      <h2>
+        <span data-editable="text" data-prop="visit.heading">
+          {b.visit.heading}
+        </span>
+        <br />
+        <em data-editable="text" data-prop="visit.accent">
+          {b.visit.accent}
+        </em>
+      </h2>
+      <p
+        class="preserve-lines"
+        data-editable="text"
+        data-prop="visit.description"
+      >
+        {b.visit.description}
+      </p>
+      <a
+        href={b.directions_url}
+        class="button button-yellow"
+        data-conversion="directions"
+      >
+        <span data-editable="text" data-prop="visit.directions_label">
+          {b.visit.directions_label}
+        </span>
+        <Icon name="arrow-up-right" size={18} />
+      </a>
+    </div>
+    <div class="visit-details">
+      <div>
+        <Icon name="map-pin" size={22} />
+        <h3 data-editable="text" data-prop="visit.location_heading">
+          {b.visit.location_heading}
+        </h3>
+        <address>
+          <span data-editable="text" data-prop="address">
+            {b.address}
+          </span>
+          <br />
+          <span data-editable="text" data-prop="locality">
+            {b.locality}
+          </span>
+        </address>
+        <a class="contact-phone" href={b.phone_link}>
+          <Icon name="phone" size={16} />
+          <span data-editable="text" data-prop="phone">
+            {b.phone}
+          </span>
+        </a>
+      </div>
+      <div class="hours">
+        <h3 data-editable="text" data-prop="visit.hours_heading">
+          {b.visit.hours_heading}
+        </h3>
+        <dl data-editable="array" data-prop="hours">
+          {b.hours.map((item: { days: string; time: string }) => (
+            <div data-editable="array-item">
+              <dt data-editable="text" data-prop="days">
+                {item.days}
+              </dt>
+              <dd data-editable="text" data-prop="time">
+                {item.time}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p data-editable="text" data-prop="visit.hours_note">
+          {b.visit.hours_note}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

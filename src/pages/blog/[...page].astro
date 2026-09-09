@@ -10,14 +10,15 @@ type Props = {
 };
 
 export async function getStaticPaths({ paginate }: { paginate: Function }) {
-  const posts = await getCollection("blog");
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
   const page = await getEntry("pages", "blog");
   posts.sort((a, b) => {
     const aDate = new Date(a.data.post_hero.date);
     const bDate = new Date(b.data.post_hero.date);
-    return bDate - aDate;
+    return bDate.getTime() - aDate.getTime();
   });
   if (!page) return;
+  if (!posts.length) return [{ params: { page: undefined }, props: { page: { data: [], total: 0, currentPage: 1, lastPage: 1, url: { current: '/blog/' } } } }];
   return paginate(posts, {
     pageSize: "page_size" in page.data ? page.data.page_size : 6,
   });
@@ -38,7 +39,7 @@ const { data: posts } = pagination;
     >
       {frontmatter.title}
     </h1>
-    <div class="max-w-md mx-auto mb-8">
+    {posts.length > 0 && <div class="max-w-md mx-auto mb-8">
       <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
       <script is:inline src="/pagefind/pagefind-ui.js"></script>
       <div id="search"></div>
@@ -47,10 +48,9 @@ const { data: posts } = pagination;
           new PagefindUI({ element: "#search", showSubResults: true });
         });
       </script>
-    </div>
+    </div>}
     <section>
-      <BlogList posts={posts} />
-      <BlogPagination pagination={pagination} />
+      {posts.length > 0 ? <><BlogList posts={posts} /><BlogPagination pagination={pagination} /></> : <p class="text-center">We’ll share news from the market here. Until then, <a href="/visit/" class="text-link">come say hello →</a></p>}
     </section>
   </div>
 </Layout>

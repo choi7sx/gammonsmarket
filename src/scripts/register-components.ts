@@ -4,8 +4,18 @@ import Hero from "../components/heroes/hero/hero.astro";
 import LeftRight from "../components/left-right/left-right.astro";
 import TextBlock from "../components/text-block/text-block.astro";
 import PostHero from "../components/blog/post-hero/post-hero.astro";
+import MarketHome from '../components/market/Home.astro';
+import MarketDetail from '../components/market/Detail.astro';
+import MarketVisit from '../components/market/Visit.astro';
+import MarketHeader from '../components/navigation/header.astro';
+import MarketFooter from '../components/navigation/footer.astro';
 
 registerAstroComponent("Hero", Hero);
 registerAstroComponent("LeftRight", LeftRight);
 registerAstroComponent("TextBlock", TextBlock);
 registerAstroComponent("PostHero", PostHero);
+registerAstroComponent('MarketHome', MarketHome);
+registerAstroComponent('MarketDetail', MarketDetail);
+registerAstroComponent('MarketVisit', MarketVisit);
+registerAstroComponent('MarketHeader', MarketHeader);
+registerAstroComponent('MarketFooter', MarketFooter);

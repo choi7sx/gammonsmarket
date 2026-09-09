@@ -1,27 +1,80 @@
 ---
-import { footer } from "../../../data/navigation.json";
+import Icon from "../market/Icon.astro";
+const { footer, business: b } = Astro.props;
 ---
 
-<footer class="bg-gray-800 text-white">
-  <div class="mx-auto max-w-6xl px-8 py-12">
-    <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-8">
-      <a class="flex justify-center sm:justify-start" href={footer.logo_url}>
-        <img class="w-48" src={footer.logo} alt={footer.logo_alt_text} />
-      </a>
-
-      <ul class="flex gap-6 items-center justify-center">
-        {footer.links.map((link) => (
-          <li>
-            <a class="hover:text-gray-300 transition-colors" href={link.link}>
+<footer class="site-footer">
+  <div class="wrap footer-top">
+    <a href={footer.logo_url} class="brand" aria-label="Gammon’s Market home">
+      <img
+        src={footer.logo}
+        alt={footer.logo_alt_text}
+        width="458"
+        height="458"
+        data-editable="image"
+        data-prop-src="footer.logo"
+        data-prop-alt="footer.logo_alt_text"
+      />
+    </a>
+    <p
+      class="preserve-lines"
+      data-editable="text"
+      data-prop="business.footer.tagline"
+    >
+      {b.footer.tagline}
+    </p>
+    <div class="footer-links" data-editable="array" data-prop="footer.links">
+      {footer.links.map((link: { link: string; text: string }) => (
+        <div data-editable="array-item">
+          <a href={link.link}>
+            <span data-editable="text" data-prop="text">
               {link.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <div class="text-center sm:text-end text-sm text-gray-400">
-        &copy; {new Date().getFullYear()} {footer.copyright}
-      </div>
+            </span>
+            <Icon name="arrow-up-right" size={15} />
+          </a>
+        </div>
+      ))}
     </div>
+    <a class="instagram-link" href={b.instagram_url}>
+      <Icon name="camera" size={22} />
+      <span>
+        <span data-editable="text" data-prop="business.footer.social_intro">
+          {b.footer.social_intro}
+        </span>
+        <br />
+        <strong data-editable="text" data-prop="business.instagram_handle">
+          {b.instagram_handle}
+        </strong>
+      </span>
+      <Icon name="arrow-up-right" size={20} />
+    </a>
   </div>
+  <div class="wrap footer-bottom">
+    <span>
+      © {new Date().getFullYear()}{" "}
+      <span data-editable="text" data-prop="footer.copyright">
+        {footer.copyright}
+      </span>
+    </span>
+    <span>
+      <span data-editable="text" data-prop="business.footer.location_note">
+        {b.footer.location_note}
+      </span>{" "}
+      <span aria-hidden="true">♡</span>
+    </span>
+    <a
+      href={"mailto:" + b.email}
+      data-editable="text"
+      data-prop="business.email"
+    >
+      {b.email}
+    </a>
+  </div>
+  <a class="mobile-order-bar" href={b.order_url} data-conversion="order">
+    <Icon name="shopping-bag" size={18} />
+    <span data-editable="text" data-prop="business.footer.mobile_order_label">
+      {b.footer.mobile_order_label}
+    </span>
+    <Icon name="arrow-right" size={18} />
+  </a>
 </footer>

@@ -6,8 +6,13 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "test": "node --test scripts/check-site.test.mjs",
     "preview": "astro preview",
     "astro": "astro"
+  },
+  "devDependencies": {
+    "parse5": "7.3.0",
+    "yaml": "2.8.2"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.0",

@@ -18,6 +18,7 @@ const blogCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
+    draft: z.boolean().default(false),
     post_hero: z.object({
       date: z.string().or(z.date()),
       heading: z.string(),
@@ -34,6 +35,7 @@ const blogCollection = defineCollection({
 
 const pageSchema = z.object({
   title: z.string(),
+  market: z.any().optional(),
   hero_block: z.any().optional(),
   content_blocks: z.array(z.any()).optional(),
   seo: seoSchema,

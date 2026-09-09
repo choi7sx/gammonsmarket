@@ -1,0 +1,45 @@
+{
+  "order_url": "https://gammonsmarket.square.site/",
+  "email": "info@gammonsmarket.com",
+  "phone": "(615) 826-0033",
+  "phone_link": "tel:+16158260033",
+  "directions_url": "https://www.google.com/maps/dir/?api=1&destination=760+East+Main+Street+Hendersonville+TN+37075",
+  "address": "760 East Main Street",
+  "locality": "Hendersonville, TN 37075",
+  "announcement": "Good food. Local roots. Always a warm welcome.",
+  "announcement_address": "760 East Main St, Hendersonville",
+  "location_label": "Hendersonville, Tennessee",
+  "instagram_url": "https://www.instagram.com/gammonsmarket/",
+  "instagram_handle": "@gammonsmarket",
+  "jobs_url": "https://form.jotform.com/251064909133151",
+  "visit": {
+    "eyebrow": "JUST AROUND THE CORNER",
+    "heading": "See you at",
+    "accent": "the market.",
+    "description": "Swing by for the essentials.\nStay for everything else.",
+    "directions_label": "Get directions",
+    "location_heading": "Find us in Hendersonville",
+    "hours_heading": "Come on over.",
+    "hours_note": "For today’s café availability, check the online menu."
+  },
+  "hours": [
+    {
+      "days": "Monday – Friday",
+      "time": "7 am – 7 pm"
+    },
+    {
+      "days": "Saturday",
+      "time": "8 am – 7 pm"
+    },
+    {
+      "days": "Sunday",
+      "time": "10 am – 5 pm"
+    }
+  ],
+  "footer": {
+    "tagline": "Your neighborhood.\nYour market.",
+    "social_intro": "A little more local love.",
+    "location_note": "Rooted in Hendersonville, Tennessee.",
+    "mobile_order_label": "Order from the café"
+  }
+}

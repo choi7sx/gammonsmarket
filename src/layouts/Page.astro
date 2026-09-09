@@ -1,5 +1,7 @@
 ---
 import Layout, { type SEOProps } from "./Layout.astro";
+import MarketHome from "../components/market/Home.astro";
+import MarketDetail from "../components/market/Detail.astro";
 
 type Props = {
   frontmatter: {
@@ -7,6 +9,7 @@ type Props = {
     content_blocks: any[];
     hero_block: any;
     seo?: SEOProps;
+    market?: any;
   };
 };
 
@@ -25,29 +28,59 @@ const componentMap: Record<string, string> = {
 
 Object.entries(componentImports).forEach(([path, obj]) => {
   const relativePath = path.replace("../components/", "").replace(".astro", "");
-  const entry = Object.entries(componentMap).find(([, v]) => v === relativePath);
+  const entry = Object.entries(componentMap).find(
+    ([, v]) => v === relativePath,
+  );
   if (entry) {
     components[entry[0]] = (obj as any).default;
   }
 });
 
-const HeroComponent = props.hero_block?._name ? components[props.hero_block._name] : null;
+const HeroComponent = props.hero_block?._name
+  ? components[props.hero_block._name]
+  : null;
 ---
 
 <Layout {...props}>
-  {HeroComponent && (
-    <editable-component data-prop="hero_block" data-component={props.hero_block._name}>
+  {props.market && (
+    <editable-component
+      data-prop="market"
+      data-component={
+        props.market.kind === "home" ? "MarketHome" : "MarketDetail"
+      }
+    >
+      {props.market.kind === "home" ? (
+        <MarketHome {...props.market} />
+      ) : (
+        <MarketDetail {...props.market} />
+      )}
+    </editable-component>
+  )}
+  {!props.market && HeroComponent && (
+    <editable-component
+      data-prop="hero_block"
+      data-component={props.hero_block._name}
+    >
       <HeroComponent {...props.hero_block} />
     </editable-component>
   )}
 
-  {props.content_blocks?.length > 0 && (
-    <div data-editable="array" data-prop="content_blocks" data-id-key="_name" data-component-key="_name">
+  {!props.market && props.content_blocks?.length > 0 && (
+    <div
+      data-editable="array"
+      data-prop="content_blocks"
+      data-id-key="_name"
+      data-component-key="_name"
+    >
       {props.content_blocks.map((block) => {
         const Component = components[block._name];
         if (!Component) return null;
         return (
-          <section data-editable="array-item" data-id={block._name} data-component={block._name}>
+          <section
+            data-editable="array-item"
+            data-id={block._name}
+            data-component={block._name}
+          >
             <Component {...block} />
           </section>
         );
