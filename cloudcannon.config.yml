@@ -1,4 +1,4 @@
-timezone: Pacific/Auckland
+timezone: America/Chicago
 
 paths:
   static: public
@@ -20,11 +20,23 @@ collections_config:
     icon: laptop_mac
     _enabled_editors:
       - visual
+      - data
     add_options:
+      - name: Add Market Page
+        schema: market_detail
+        icon: store
       - name: Add New Page
         schema: default
         icon: pages
     schemas:
+      market_home:
+        name: Market Homepage
+        path: '.cloudcannon/schemas/market-home.md'
+        remove_extra_inputs: false
+      market_detail:
+        name: Market Page
+        path: '.cloudcannon/schemas/market-detail.md'
+        remove_extra_inputs: false
       default:
         name: New Page
         path: '.cloudcannon/schemas/page.md'
@@ -269,6 +281,62 @@ _structures:
             link:
 
 _inputs:
+  draft:
+    type: checkbox
+    comment: Draft posts stay out of the public blog, search index, RSS feed, and sitemap.
+  market:
+    type: object
+    label: Page Content
+  kind:
+    hidden: true
+  slug:
+    type: text
+    comment: Used for the page’s layout style. The filename controls its URL.
+  hero:
+    type: object
+    label: Welcome Section
+  sections:
+    type: array
+    comment: Page sections. Reorder here or in the Visual Editor.
+  type:
+    type: select
+    options:
+      values: [cards, food, story, csa, faq, callout]
+  action:
+    type: select
+    comment: Uses the shared destination in Data → Business. A custom link takes priority.
+    options:
+      values: [order, directions, phone, email, csa, gift, jobs]
+      allow_empty: true
+  link:
+    type: text
+    comment: A relative page path or full destination URL. Leave empty to use the selected action.
+  description:
+    type: textarea
+  heading:
+    type: textarea
+  note:
+    type: textarea
+  address:
+    type: text
+  order_url:
+    type: url
+    label: Online Ordering URL
+  directions_url:
+    type: url
+  phone_link:
+    type: text
+    comment: Click-to-call destination, e.g. tel:+16158260033.
+  email:
+    type: email
+  hours:
+    type: array
+  image:
+    type: object
+    options:
+      preview:
+        image: [key: image_path]
+        text: [key: alt_text]
   content_blocks:
     type: array
     options:
@@ -308,26 +376,13 @@ _inputs:
       redo: true
       removeformat: true
       copyformatting: true
-  image:
-    type: object
-    options:
-      preview:
-        icon: image
-        text: 
-          - key: image_alt
-          - Image
-        subtext:
-          - key: image_path
-          - Select or upload an image.
-        image:
-          - key: image_path
   image_path:
     type: image
     comment: The path to the source file of the image.
     options:
       paths:
-        static: ''
-        uploads: src/assets/images
+        static: public
+        uploads: public/images
   alt_text:
     label: Image Alt Text
     type: textarea

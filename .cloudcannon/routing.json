@@ -1,0 +1,34 @@
+{
+  "routes": [
+    {
+      "from": "/locations-1",
+      "to": "/visit/",
+      "status": 301
+    },
+    {
+      "from": "/locations-1/",
+      "to": "/visit/",
+      "status": 301
+    },
+    {
+      "from": "/hendersonville",
+      "to": "/visit/",
+      "status": 301
+    },
+    {
+      "from": "/hendersonville/",
+      "to": "/visit/",
+      "status": 301
+    },
+    {
+      "from": "/copy-of-about",
+      "to": "/gift-baskets/",
+      "status": 301
+    },
+    {
+      "from": "/copy-of-about/",
+      "to": "/gift-baskets/",
+      "status": 301
+    }
+  ]
+}

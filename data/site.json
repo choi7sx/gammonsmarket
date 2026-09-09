@@ -1,8 +1,8 @@
 {
-  "site_title": "Astro Starter",
-  "description": "A starter template for Astro with Editable Regions, for CloudCannon CMS.",
+  "site_title": "Gammon’s Market",
+  "description": "Your neighborhood market in Hendersonville, Tennessee. Local groceries, seasonal produce, coffee, breakfast, lunch, and a farm CSA.",
   "twitter_site": "",
-  "image": "/images/logos/logo-wordmark-blue.png",
-  "image_alt": "CloudCannon logo",
-  "default_author": "CloudCannon"
+  "image": "/images/gammons-market-logo.avif",
+  "image_alt": "Gammon’s Market — established 2006",
+  "default_author": "Gammon’s Market"
 }

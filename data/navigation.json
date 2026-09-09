@@ -1,40 +1,49 @@
 {
   "header": {
-    "logo": "/images/logos/logo-wordmark-blue.png",
-    "logo_alt_text": "CloudCannon logo",
+    "logo": "/images/gammons-market-logo.avif",
+    "logo_alt_text": "Gammon’s Market — established 2006",
     "logo_url": "/",
+    "order_label": "Order online",
     "links": [
       {
+        "link": "/market/",
+        "text": "The Market"
+      },
+      {
+        "link": "/cafe/",
+        "text": "Coffee & Café"
+      },
+      {
+        "link": "/csa/",
+        "text": "Our CSA"
+      },
+      {
         "link": "/about/",
-        "text": "About"
+        "text": "Our Story"
       },
       {
-        "link": "/blog/",
-        "text": "Blog"
-      },
-      {
-        "link": "https://github.com/CloudCannon/astro-starter/",
-        "text": "GitHub"
-      },
-      {
-        "link": "https://cloudcannon.com/",
-        "text": "CloudCannon"
+        "link": "/visit/",
+        "text": "Visit Us"
       }
     ]
   },
   "footer": {
-    "logo": "/images/logos/logo-wordmark-white.png",
-    "logo_alt_text": "CloudCannon logo",
+    "logo": "/images/gammons-market-logo.avif",
+    "logo_alt_text": "Gammon’s Market — established 2006",
     "logo_url": "/",
-    "copyright": "MyCompany. All rights reserved.",
+    "copyright": "Gammon’s Market",
     "links": [
       {
-        "link": "/blog/",
-        "text": "Blog"
+        "link": "/contact/",
+        "text": "Get in touch"
       },
       {
-        "link": "/feed.xml",
-        "text": "RSS Feed"
+        "link": "/gift-baskets/",
+        "text": "Gift baskets"
+      },
+      {
+        "link": "https://form.jotform.com/251064909133151",
+        "text": "Join our team"
       }
     ]
   }

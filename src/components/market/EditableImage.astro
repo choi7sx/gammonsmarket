@@ -1,0 +1,23 @@
+---
+import type { MarketImage } from "../../lib/market";
+interface Props {
+  image: MarketImage;
+  prop: string;
+  eager?: boolean;
+  width?: number;
+  height?: number;
+}
+const { image, prop, eager = false, width = 800, height = 850 } = Astro.props;
+---
+
+<img
+  src={image.image_path}
+  alt={image.alt_text}
+  width={width}
+  height={height}
+  loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "high" : undefined}
+  data-editable="image"
+  data-prop-src={`${prop}.image_path`}
+  data-prop-alt={`${prop}.alt_text`}
+/>

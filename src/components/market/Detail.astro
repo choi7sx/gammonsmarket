@@ -1,0 +1,239 @@
+---
+import Icon from "./Icon.astro";
+import Button from "./Button.astro";
+import EditableImage from "./EditableImage.astro";
+import business from "../../../data/business.json";
+import type { MarketDetail } from "../../lib/market";
+type Props = MarketDetail;
+const { title, slug, hero, sections } = Astro.props;
+---
+
+<section class:list={["detail-hero wrap", `detail-${slug}`]}>
+  <div>
+    <a href="/" class="breadcrumb">
+      Home <span>/</span> {title}
+    </a>
+    <p class="eyebrow" data-editable="text" data-prop="hero.eyebrow">
+      {hero.eyebrow}
+    </p>
+    <h1>
+      <span data-editable="text" data-prop="hero.heading">
+        {hero.heading}
+      </span>
+      <br />
+      <em data-editable="text" data-prop="hero.accent">
+        {hero.accent}
+      </em>
+    </h1>
+    <p
+      class="detail-description"
+      data-editable="text"
+      data-prop="hero.description"
+    >
+      {hero.description}
+    </p>
+    <div class="detail-actions">
+      <Button button={hero.button} prop="hero.button" />
+      {hero.show_phone && (
+        <a href={business.phone_link} class="text-link">
+          <Icon name="phone" size={16} />
+          <span
+            data-editable="text"
+            data-prop="@file[data/business.json].phone"
+          >
+            {business.phone}
+          </span>
+        </a>
+      )}
+    </div>
+    {hero.note && (
+      <p class="small-note" data-editable="text" data-prop="hero.note">
+        {hero.note}
+      </p>
+    )}
+  </div>
+  <figure>
+    <EditableImage image={hero.image} prop="hero.image" eager />
+  </figure>
+</section>
+<div data-editable="array" data-prop="sections">
+  {sections.map((section) => (
+    <div data-editable="array-item">
+      {(section.type === "cards" || section.type === "food") && (
+        <section class="wrap detail-content">
+          {section.heading && (
+            <div class="section-heading">
+              <div>
+                {section.eyebrow && (
+                  <p class="eyebrow" data-editable="text" data-prop="eyebrow">
+                    {section.eyebrow}
+                  </p>
+                )}
+                <h2 data-editable="text" data-prop="heading">
+                  {section.heading}
+                </h2>
+              </div>
+              {section.button && <Button button={section.button} />}
+            </div>
+          )}
+          <div
+            class={section.type === "food" ? "food-grid" : "value-grid"}
+            data-editable="array"
+            data-prop="cards"
+            data-direction="row"
+          >
+            {section.cards?.map((card, i) => (
+              <article data-editable="array-item">
+                {card.image ? (
+                  <EditableImage image={card.image} prop="image" />
+                ) : card.icon ? (
+                  <Icon name={card.icon} />
+                ) : (
+                  <span class="step-number">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                )}
+                <h3 data-editable="text" data-prop="heading">
+                  {card.heading}
+                </h3>
+                <p data-editable="text" data-prop="description">
+                  {card.description}
+                </p>
+                {card.button && <Button button={card.button} variant="text" />}
+              </article>
+            ))}
+          </div>
+          {section.description && (
+            <p class="juice-note" data-editable="text" data-prop="description">
+              {section.description}
+            </p>
+          )}
+          {section.note && (
+            <p class="availability-note" data-editable="text" data-prop="note">
+              {section.note}
+            </p>
+          )}
+        </section>
+      )}
+      {section.type === "callout" && (
+        <section class="simple-callout wrap">
+          {section.icon && <Icon name={section.icon} />}
+          <h3 data-editable="text" data-prop="heading">
+            {section.heading}
+          </h3>
+          <p data-editable="text" data-prop="description">
+            {section.description}
+          </p>
+          {section.button && (
+            <Button
+              button={section.button}
+              variant={section.button.action === "order" ? "green" : "text"}
+            />
+          )}
+        </section>
+      )}
+      {section.type === "story" && (
+        <section class="wrap detail-content story-content">
+          <p class="eyebrow" data-editable="text" data-prop="eyebrow">
+            {section.eyebrow}
+          </p>
+          <h2>
+            <span data-editable="text" data-prop="heading">
+              {section.heading}
+            </span>
+            <br />
+            <em data-editable="text" data-prop="accent">
+              {section.accent}
+            </em>
+          </h2>
+          <div
+            class="story-paragraphs"
+            data-editable="array"
+            data-prop="paragraphs"
+          >
+            {section.paragraphs?.map((p) => (
+              <p data-editable="array-item">
+                <span data-editable="text" data-prop="text">
+                  {p.text}
+                </span>
+              </p>
+            ))}
+          </div>
+          {section.button && (
+            <Button button={section.button} variant="text" icon="arrow-right" />
+          )}
+        </section>
+      )}
+      {section.type === "csa" && (
+        <section class="wrap detail-content csa-detail">
+          <div>
+            <p class="eyebrow" data-editable="text" data-prop="eyebrow">
+              {section.eyebrow}
+            </p>
+            <h2>
+              <span data-editable="text" data-prop="heading">
+                {section.heading}
+              </span>
+              <br />
+              <em data-editable="text" data-prop="accent">
+                {section.accent}
+              </em>
+            </h2>
+            <p data-editable="text" data-prop="description">
+              {section.description}
+            </p>
+            <div class="pickup-note">
+              <Icon name="map-pin" />
+              <div>
+                <strong data-editable="text" data-prop="pickup_heading">
+                  {section.pickup_heading}
+                </strong>
+                <span data-editable="text" data-prop="pickup_description">
+                  {section.pickup_description}
+                </span>
+              </div>
+            </div>
+            <p class="small-note" data-editable="text" data-prop="note">
+              {section.note}
+            </p>
+          </div>
+          <div class="csa-steps" data-editable="array" data-prop="cards">
+            {section.cards?.map((card, i) => (
+              <article data-editable="array-item">
+                <span>{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 data-editable="text" data-prop="heading">
+                    {card.heading}
+                  </h3>
+                  <p data-editable="text" data-prop="description">
+                    {card.description}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+      {section.type === "faq" && (
+        <section class="wrap faq-section">
+          <h2 data-editable="text" data-prop="heading">
+            {section.heading}
+          </h2>
+          <div data-editable="array" data-prop="questions">
+            {section.questions?.map((q) => (
+              <details data-editable="array-item">
+                <summary data-editable="text" data-prop="question">
+                  {q.question}
+                </summary>
+                <p data-editable="text" data-prop="answer">
+                  {q.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+          {section.button && <Button button={section.button} variant="text" />}
+        </section>
+      )}
+    </div>
+  ))}
+</div>

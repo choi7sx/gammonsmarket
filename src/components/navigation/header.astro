@@ -1,78 +1,122 @@
 ---
-import { header } from "../../../data/navigation.json";
+import Icon from "../market/Icon.astro";
+const { header, business: b, pathname = "/" } = Astro.props;
 ---
 
-<header class="bg-white">
-  <div class="mx-auto max-w-6xl px-8">
-    <nav class="flex items-center justify-between py-4">
-      <a href={header.logo_url}>
-        <img class="w-48" src={header.logo} alt={header.logo_alt_text} />
-      </a>
-
-      <ul class="hidden sm:flex items-center gap-6">
-        {header.links.map((link) => (
-          <li>
-            <a class="text-gray-700 hover:text-gray-500 transition-colors" href={link.link}>
-              {link.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <button
-        class="sm:hidden p-2"
-        aria-label="Open navigation menu"
-        popovertarget="mobile-menu"
-        popovertargetaction="show"
-      >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
-
-      <div popover id="mobile-menu" class="fixed inset-0 m-0 w-full h-full max-w-none max-h-none border-none bg-white z-50">
-        <div class="flex flex-col h-full">
-        <div class="mx-auto w-full max-w-6xl flex items-center justify-between px-8 py-4">
-          <a href={header.logo_url}>
-            <img class="w-48" src={header.logo} alt={header.logo_alt_text} />
-          </a>
-          <button
-            class="p-2"
-            aria-label="Close navigation menu"
-            popovertarget="mobile-menu"
-            popovertargetaction="hide"
+<a href="#main" class="skip-link">
+  Skip to content
+</a>
+<div class="announcement">
+  <span data-editable="text" data-prop="business.announcement">
+    {b.announcement}
+  </span>
+  <a href="/visit/">
+    <Icon name="map-pin" size={13} />
+    <span data-editable="text" data-prop="business.announcement_address">
+      {b.announcement_address}
+    </span>
+    <Icon name="arrow-up-right" size={13} />
+  </a>
+</div>
+<header class="site-header">
+  <div class="wrap nav-inner">
+    <a href={header.logo_url} class="brand" aria-label="Gammon’s Market home">
+      <img
+        src={header.logo}
+        alt={header.logo_alt_text}
+        width="458"
+        height="458"
+        data-editable="image"
+        data-prop-src="header.logo"
+        data-prop-alt="header.logo_alt_text"
+      />
+    </a>
+    <nav
+      class="desktop-nav"
+      aria-label="Main navigation"
+      data-editable="array"
+      data-prop="header.links"
+      data-direction="row"
+    >
+      {header.links.map((link: { link: string; text: string }) => (
+        <span data-editable="array-item">
+          <a
+            href={link.link}
+            aria-current={
+              pathname.replace(/\/$/, "") === link.link.replace(/\/$/, "")
+                ? "page"
+                : undefined
+            }
           >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <ul class="flex flex-1 flex-col items-center justify-center gap-0 divide-y divide-gray-200">
-          {header.links.map((link) => (
-            <li class="w-full max-w-xs text-center">
-              <a class="block py-5 text-2xl font-medium text-gray-800 hover:text-blue-600 transition-colors" href={link.link}>
-                {link.text}
-              </a>
-            </li>
-          ))}
-        </ul>
-        </div>
-      </div>
+            <span data-editable="text" data-prop="text">
+              {link.text}
+            </span>
+          </a>
+        </span>
+      ))}
     </nav>
+    <a
+      href={b.order_url}
+      class="button button-green nav-order"
+      data-conversion="order"
+    >
+      <span data-editable="text" data-prop="header.order_label">
+        {header.order_label}
+      </span>
+      <Icon name="arrow-up-right" size={17} />
+    </a>
+    <button
+      type="button"
+      class="mobile-menu"
+      aria-label="Open navigation"
+      aria-controls="market-menu"
+      aria-expanded="false"
+      data-menu-open
+    >
+      <Icon name="menu" />
+    </button>
   </div>
 </header>
-
-<style>
-  #mobile-menu {
-    opacity: 0;
-    transition: opacity 200ms ease, display 200ms allow-discrete, overlay 200ms allow-discrete;
-  }
-  #mobile-menu:popover-open {
-    opacity: 1;
-  }
-  @starting-style {
-    #mobile-menu:popover-open {
-      opacity: 0;
-    }
-  }
-</style>
+<dialog
+  id="market-menu"
+  class="mobile-nav-panel"
+  aria-labelledby="market-menu-title"
+>
+  <button
+    type="button"
+    class="mobile-nav-close"
+    aria-label="Close navigation"
+    data-menu-close
+  >
+    <Icon name="x" />
+  </button>
+  <h2 id="market-menu-title">Welcome to Gammon’s.</h2>
+  <p>Your neighborhood market and café.</p>
+  <nav aria-label="Mobile navigation">
+    {header.links.map((link: { link: string; text: string }) => (
+      <a href={link.link}>
+        {link.text}
+        <Icon name="arrow-up-right" size={21} />
+      </a>
+    ))}
+    <a href="/gift-baskets/">
+      Gift baskets
+      <Icon name="arrow-up-right" size={21} />
+    </a>
+    <a href="/contact/">
+      Get in touch
+      <Icon name="arrow-up-right" size={21} />
+    </a>
+  </nav>
+  <a href={b.order_url} class="button button-green">
+    {header.order_label}
+    <Icon name="arrow-up-right" size={18} />
+  </a>
+</dialog>
+<noscript>
+  <nav class="noscript-nav" aria-label="Navigation">
+    {header.links.map((link: { link: string; text: string }) => (
+      <a href={link.link}>{link.text}</a>
+    ))}
+  </nav>
+</noscript>

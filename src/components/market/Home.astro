@@ -1,0 +1,303 @@
+---
+import Icon from "./Icon.astro";
+import Button from "./Button.astro";
+import EditableImage from "./EditableImage.astro";
+import business from "../../../data/business.json";
+import { actionLink, type MarketCard } from "../../lib/market";
+const { hero, ribbon, discover, cafe, roots, csa } = Astro.props;
+---
+
+<section class="hero wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">
+      <span class="little-star" aria-hidden="true">
+        ✳
+      </span>
+      <span data-editable="text" data-prop="hero.eyebrow">
+        {hero.eyebrow}
+      </span>
+    </p>
+    <h1>
+      <span data-editable="text" data-prop="hero.heading">
+        {hero.heading}
+      </span>
+      <br />
+      <span data-editable="text" data-prop="hero.heading_second">
+        {hero.heading_second}
+      </span>
+      <br />
+      <span class="hero-accent" data-editable="text" data-prop="hero.accent">
+        {hero.accent}
+      </span>
+    </h1>
+    <p
+      class="hero-description"
+      data-editable="text"
+      data-prop="hero.description"
+    >
+      {hero.description}
+    </p>
+    <div class="hero-actions">
+      <Button button={hero.button} prop="hero.button" />
+      <Button
+        button={hero.secondary_button}
+        prop="hero.secondary_button"
+        variant="outline"
+        icon="arrow-right"
+      />
+    </div>
+    <div class="hero-location">
+      <Icon name="map-pin" size={16} />
+      <span
+        data-editable="text"
+        data-prop="@file[data/business.json].location_label"
+      >
+        {business.location_label}
+      </span>
+      <span class="dot" />
+      <span data-editable="text" data-prop="hero.location_note">
+        {hero.location_note}
+      </span>
+    </div>
+  </div>
+  <div class="hero-photos">
+    <figure class="produce-photo">
+      <EditableImage
+        image={hero.produce_image}
+        prop="hero.produce_image"
+        width={664}
+        height={954}
+        eager
+      />
+      <figcaption data-editable="text" data-prop="hero.produce_caption">
+        {hero.produce_caption}
+      </figcaption>
+    </figure>
+    <figure class="coffee-photo">
+      <EditableImage
+        image={hero.coffee_image}
+        prop="hero.coffee_image"
+        width={664}
+        height={954}
+        eager
+      />
+      <figcaption data-editable="text" data-prop="hero.coffee_caption">
+        {hero.coffee_caption}
+      </figcaption>
+    </figure>
+    <div class="local-seal">
+      <span data-editable="text" data-prop="hero.seal_top">
+        {hero.seal_top}
+      </span>
+      <Icon name="heart" size={27} strokeWidth={1.5} />
+      <strong data-editable="text" data-prop="hero.seal_heading">
+        {hero.seal_heading}
+      </strong>
+      <span data-editable="text" data-prop="hero.seal_bottom">
+        {hero.seal_bottom}
+      </span>
+    </div>
+  </div>
+</section>
+<div class="market-ribbon">
+  <div data-editable="array" data-prop="ribbon" data-direction="row">
+    {ribbon.map((item: { text: string }) => (
+      <div class="ribbon-item" data-editable="array-item">
+        <span data-editable="text" data-prop="text">
+          {item.text}
+        </span>
+        <span aria-hidden="true">✳</span>
+      </div>
+    ))}
+  </div>
+</div>
+<section class="discover wrap section-space" id="around-the-market">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow" data-editable="text" data-prop="discover.eyebrow">
+        {discover.eyebrow}
+      </p>
+      <h2>
+        <span data-editable="text" data-prop="discover.heading">
+          {discover.heading}
+        </span>
+        <br class="mobile-break" />{" "}
+        <span data-editable="text" data-prop="discover.accent">
+          {discover.accent}
+        </span>
+      </h2>
+    </div>
+    <p
+      class="preserve-lines"
+      data-editable="text"
+      data-prop="discover.description"
+    >
+      {discover.description}
+    </p>
+  </div>
+  <div
+    class="discovery-grid"
+    data-editable="array"
+    data-prop="discover.cards"
+    data-direction="row"
+  >
+    {discover.cards.map((card: MarketCard) => (
+      <a
+        href={actionLink(card.button)}
+        class="discovery-card"
+        data-editable="array-item"
+      >
+        <div class="card-photo">
+          {card.image && <EditableImage image={card.image} prop="image" />}
+          <span class:list={["photo-label", card.color]}>
+            <Icon name={card.icon || "sprout"} size={15} />
+            <span data-editable="text" data-prop="label">
+              {card.label}
+            </span>
+          </span>
+        </div>
+        <div class="card-title">
+          <h3 data-editable="text" data-prop="heading">
+            {card.heading}
+          </h3>
+          <Icon name="arrow-up-right" />
+        </div>
+        <p data-editable="text" data-prop="description">
+          {card.description}
+        </p>
+        <span class="text-link">
+          <span data-editable="text" data-prop="button.text">
+            {card.button?.text}
+          </span>
+          <Icon name="arrow-right" size={17} />
+        </span>
+      </a>
+    ))}
+  </div>
+</section>
+<section class="cafe-section" id="cafe">
+  <div class="wrap cafe-layout">
+    <div class="cafe-photograph">
+      <EditableImage
+        image={cafe.image}
+        prop="cafe.image"
+        width={1824}
+        height={1368}
+      />
+      <span class="photo-note" data-editable="text" data-prop="cafe.caption">
+        {cafe.caption}
+      </span>
+    </div>
+    <div class="cafe-copy">
+      <p class="eyebrow">
+        <Icon name="coffee" size={17} />
+        <span data-editable="text" data-prop="cafe.eyebrow">
+          {cafe.eyebrow}
+        </span>
+      </p>
+      <h2>
+        <span
+          class="preserve-lines"
+          data-editable="text"
+          data-prop="cafe.heading"
+        >
+          {cafe.heading}
+        </span>
+        <br />
+        <em data-editable="text" data-prop="cafe.accent">
+          {cafe.accent}
+        </em>
+      </h2>
+      <p data-editable="text" data-prop="cafe.description">
+        {cafe.description}
+      </p>
+      <div
+        class="cafe-tags"
+        data-editable="array"
+        data-prop="cafe.tags"
+        data-direction="row"
+      >
+        {cafe.tags.map((tag: { text: string }) => (
+          <span data-editable="array-item">
+            <span data-editable="text" data-prop="text">
+              {tag.text}
+            </span>
+          </span>
+        ))}
+      </div>
+      <Button button={cafe.button} prop="cafe.button" />
+      <p class="small-note" data-editable="text" data-prop="cafe.note">
+        {cafe.note}
+      </p>
+    </div>
+  </div>
+</section>
+<section class="roots-section wrap section-space">
+  <div class="roots-copy">
+    <p class="eyebrow" data-editable="text" data-prop="roots.eyebrow">
+      {roots.eyebrow}
+    </p>
+    <h2>
+      <span data-editable="text" data-prop="roots.heading">
+        {roots.heading}
+      </span>
+      <br />
+      <em data-editable="text" data-prop="roots.accent">
+        {roots.accent}
+      </em>
+    </h2>
+    <div
+      class="roots-paragraphs"
+      data-editable="array"
+      data-prop="roots.paragraphs"
+    >
+      {roots.paragraphs.map((paragraph: { text: string }) => (
+        <p data-editable="array-item">
+          <span data-editable="text" data-prop="text">
+            {paragraph.text}
+          </span>
+        </p>
+      ))}
+    </div>
+    <Button
+      button={roots.button}
+      prop="roots.button"
+      variant="text"
+      icon="arrow-right"
+    />
+  </div>
+  <div class="roots-image">
+    <EditableImage
+      image={roots.image}
+      prop="roots.image"
+      width={1354}
+      height={1365}
+    />
+    <div class="roots-note">
+      <Icon name="sprout" size={31} />
+      <span class="preserve-lines" data-editable="text" data-prop="roots.note">
+        {roots.note}
+      </span>
+    </div>
+  </div>
+</section>
+<section class="csa-banner wrap">
+  <Icon name="sun" size={45} strokeWidth={1.2} />
+  <div>
+    <p class="eyebrow" data-editable="text" data-prop="csa.eyebrow">
+      {csa.eyebrow}
+    </p>
+    <h3 data-editable="text" data-prop="csa.heading">
+      {csa.heading}
+    </h3>
+    <p data-editable="text" data-prop="csa.description">
+      {csa.description}
+    </p>
+  </div>
+  <Button
+    button={csa.button}
+    prop="csa.button"
+    variant="outline"
+    icon="arrow-right"
+  />
+</section>

@@ -8,7 +8,7 @@ export interface Props {
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
-  return pages.map((page) => {
+  return pages.filter((page) => !('page_size' in page.data)).map((page) => {
     const slug = page.id.replace(/index$/, "");
     if (slug.length === 0)
       return { params: { slug: undefined }, props: { page } };

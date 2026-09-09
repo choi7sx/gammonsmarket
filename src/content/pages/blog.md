@@ -1,8 +1,8 @@
 ---
 _schema: paginated
-title: Blog
+title: Market Notes
 seo:
-  page_description: A blog template with tags.
+  page_description: News, seasonal finds, and little moments from Gammon’s Market in Hendersonville.
   canonical_url:
   featured_image:
   featured_image_alt:
